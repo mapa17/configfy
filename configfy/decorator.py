@@ -1,33 +1,26 @@
-def configfy_func(func):
-    def func_wrapper(*args, **kwargs):
-        print(f'Callng {func} with {args} and {kwargs}')
-        return func(*args, **kwargs)
-    return func_wrapper
-
 from . import configfile
 import functools
 import inspect
 
-class configfy_class(object):
+class configfy(object):
     def __init__(self, *args, **kwargs):
-        print('Init configfy_class ...')
-        print(f'args={args}, kwargs={kwargs}')
-
         if 'section' in kwargs:
             self.section = kwargs['section']
         else:
             self.section = None
+        
+        if 'config' in kwargs:
+           self.config = configfile.read_configfile(kwargs['config'])
+        else:
+            self.config = None
 
         self.needs_wrapping = False
         if args is ():
-            print('Complex decorator')
             self.needs_wrapping = True
         else:
-            print('Simple decorator')
             self.func = args[0]
             functools.update_wrapper(self, self.func)
             self.kwargs = self.__get_kw_args(self.func)
-            print(f'Function has kw {self.kwargs}')
 
     def __call__(self, *args, **kwargs):
         if self.needs_wrapping:
@@ -35,11 +28,13 @@ class configfy_class(object):
             self.func = args[0]
             functools.update_wrapper(self, self.func)
             self.kwargs = self.__get_kw_args(self.func)
-            print(f'Function has kw {self.kwargs}')
             return self
 
-        # Get current config, and check which kwargs are relevant for this function
-        config = configfile.get_config(self.section)
+        # Get current config or function config, and check which kwargs are relevant for this function
+        if self.config is None:
+            config = configfile.get_config(self.section)
+        else:
+            config = self.config
         kwargs_in_config = [kwarg for kwarg in self.kwargs if kwarg in config]
 
         # Build a new kwarg dict with the values from the config
@@ -48,7 +43,7 @@ class configfy_class(object):
         # Overwrite them with any passed arguments; passed arguments have priority!
         new_kwargs.update(kwargs)
 
-        print(f'Called {self.func} with {args} {new_kwargs} ...')
+        #print(f'Called {self.func} with {args} {new_kwargs} ...')
         return self.func(*args, **new_kwargs)
 
     @staticmethod
