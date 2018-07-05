@@ -4,7 +4,7 @@ def configfy_func(func):
         return func(*args, **kwargs)
     return func_wrapper
 
-from . import settings
+from . import configfile
 import functools
 import inspect
 
@@ -12,6 +12,12 @@ class configfy_class(object):
     def __init__(self, *args, **kwargs):
         print('Init configfy_class ...')
         print(f'args={args}, kwargs={kwargs}')
+
+        if 'section' in kwargs:
+            self.section = kwargs['section']
+        else:
+            self.section = None
+
         self.needs_wrapping = False
         if args is ():
             print('Complex decorator')
@@ -32,10 +38,18 @@ class configfy_class(object):
             print(f'Function has kw {self.kwargs}')
             return self
 
-        active_config = settings.get_active_config()
+        # Get current config, and check which kwargs are relevant for this function
+        config = configfile.get_config(self.section)
+        kwargs_in_config = [kwarg for kwarg in self.kwargs if kwarg in config]
 
-        print(f'Called {self.func} on config {active_config} with {args} {kwargs} ...')
-        return self.func(*args, **kwargs)
+        # Build a new kwarg dict with the values from the config
+        new_kwargs = {kwarg: config[kwarg] for kwarg in kwargs_in_config}
+
+        # Overwrite them with any passed arguments; passed arguments have priority!
+        new_kwargs.update(kwargs)
+
+        print(f'Called {self.func} with {args} {new_kwargs} ...')
+        return self.func(*args, **new_kwargs)
 
     @staticmethod
     def __get_kw_args(func):

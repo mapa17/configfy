@@ -10,18 +10,18 @@ def adder(a, b, some_option='oki'):
     print('In adder ...')
     return a + b
 
-@configfy.configfy_class(config='mamamia.ini', section='Blaa_section')
-def multi(i, j, even_more='none'):
+@configfy.configfy_class(config='mamamia.ini', section='specific_section')
+def multi(i, j, multi_argument='none'):
     """Some multi doc ...
     """
     print('In multi ...')
     return i * j
 
-#st()
 print(adder(1, 1))
-print(multi(10, 3, even_more='blaa'))
-#st()
-configfy.set_active_config('another.ini')
-print(adder(2, 2))
+print(multi(10, 3))
 
-print(adder(3, 3, some_option='new args'))
+configfy.set_active_config_file('another_config.ini')
+print(adder(2, 2))
+print(multi(10, 3))
+
+print(adder(3, 3, some_option='Overwriting config options'))
