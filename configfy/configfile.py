@@ -4,7 +4,7 @@ import logging
 import re
 
 # This module has two glob variables
-config_file = ['config.ini',]
+config_file = ['configfy.ini',]
 config = OrderedDict()
 
 
