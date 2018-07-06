@@ -11,7 +11,7 @@ setuptools.setup(
     description="Decorator library to expose keyword arguments through config files",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/mapa17",
+    url="https://github.com/mapa17/configfy",
     packages=setuptools.find_packages(),
     classifiers=(
         "Programming Language :: Python :: 3",

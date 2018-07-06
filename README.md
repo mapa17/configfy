@@ -2,6 +2,8 @@
 Decorator library to expose keyword arguments through config files
 by manuel.pasieka@protonmail.ch
 
+Hostet at [github](https://github.com/mapa17/configfy)
+
 * [Example](##Simple Example) Look at a simple example
 * [Performance overhead](##Overhead) Whats the additional computational cost?
 * [What for?](##Utility) What is it good for?
