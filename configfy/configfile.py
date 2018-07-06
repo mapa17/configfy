@@ -32,8 +32,8 @@ def get_active_config_file():
     return config_file[0]
 
 
-def get_config(section):
-    """Return a dictionary of the specified section of the active config
+def get_config(active_config, section):
+    """Return a dictionary of the specified section in given or activate config
     
     Arguments:
         section {string} -- A section in the active config file
@@ -41,13 +41,17 @@ def get_config(section):
     Returns:
         OrderedDict -- configuration as dictionary, empty dictionary in case section is not found
     """
-    global config
+    if active_config is None:
+        global config
+        active_config = config
+
     if section is None:
         section = 'global'
+
     try:
-        return config[section]
+        return active_config[section]
     except KeyError:
-        logging.warn(f'Config section {section} not found!')
+        logging.warn('Config section %s not found!', section)
         return {}
 
 
@@ -98,6 +102,8 @@ def parser_list(string):
 
 
 def __parse_parameter(parameter):
+    """Try to detect parameter type
+    """
     result = None
 
     if parameter == '':
@@ -115,16 +121,5 @@ def __parse_parameter(parameter):
             pass
     else:
         result = str(parameter)
-    return result 
-
-
-def readconfig(fileName='config.ini', tagName=None):
-    """
-    Read python config file using ConfigParser
-    Will read all options under the region "tagName" and if possible convert a
-    value into float.
-    """
-
-
-
+    return result
     
