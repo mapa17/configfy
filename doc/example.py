@@ -3,7 +3,7 @@ from configfy import configfy as cfy
 
 @cfy
 def hello(name, another_name='Pedro'):
-    """Some print statement 
+    """Be nice and say hello 
     """
     print('Hello %s, I am %s!' % (name, another_name))
 

@@ -19,7 +19,7 @@ from configfy import configfy as cfy
 
 @cfy
 def hello(name, another_name='Pedro'):
-    """Some print statement 
+    """Be nice and say hello 
     """
     print(f'Hello {name}, I am {another_name}!')
 
@@ -50,7 +50,7 @@ from pudb import set_trace as st
 
 @cfy
 def hello(name, another_name='Pedro'):
-    """Some print statement 
+    """Be nice and say hello 
     """
     print(f'Hello {name}, I am {another_name}!')
 
