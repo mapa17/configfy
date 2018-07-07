@@ -2,13 +2,13 @@
 Decorator library to expose keyword arguments through config files
 by manuel.pasieka@protonmail.ch
 
-Hostet at [github](https://github.com/mapa17/configfy)
+Hostet on [github](https://github.com/mapa17/configfy)
 
-* [Example](##Simple Example) Look at a simple example
+* [Example](##Example) Look at a simple example
 * [Performance overhead](##Overhead) Whats the additional computational cost?
 * [What for?](##Utility) What is it good for?
 
-## Simple Example
+## Example
 
 Define a function that makes use of keyword arguments, and overwrites the default
 keyword argument with a config file setting.
