@@ -28,7 +28,7 @@ def greetings(name, language='english'):
 def goodby(msg='Goodby!'):
     print(msg)
 
-print('# Use default config.ini file (missing greetings section)...')
+print('# Use default configfy.ini file (missing greetings section)...')
 hello('Bob')
 greetings('Tom')
 goodby()

@@ -1,14 +1,23 @@
 # Configfy
 Decorator library to expose keyword arguments through config files
-by manuel.pasieka@protonmail.ch
+
+Configfy is a prototyping library that enables fast exposure of function parameters to the user in order modify program behavior without having to handle argument parsing or control the flow of config options through your program. It is implemented as a decorator library that makes use of the python configparser module.
 
 Hostet on [github](https://github.com/mapa17/configfy)
 
-* [Example](##Example) Look at a simple example
+* [Installation](##Installation) How to install configfy
+* [Examples](##Examples) Look at a simple example
 * [Performance overhead](##Overhead) Whats the additional computational cost?
-* [What for?](##Utility) What is it good for?
+* [Reasons for developing this library](##Why) What is it good for?
 
-## Example
+## Installation
+Configfy is best installed using pip
+
+```bash
+    pip install configfy
+```
+
+## Examples
 
 Define a function that makes use of keyword arguments, and overwrites the default
 keyword argument with a config file setting.
@@ -39,7 +48,9 @@ produces
 Hello Bob, I am Suzan Flusan!
 ```
 
-## Complex Example
+Note: Be aware that the library expects the presence of a config file (./configfy.ini) containing at least the empty section [global].
+
+## More Examples
 Show how to specify sections to use in config files and how the config file can be changed during runtime, or specified in the decorator.
 
 > From docs/example.py
@@ -75,7 +86,7 @@ def greetings(name, language='english'):
 def goodby(msg='Goodby!'):
     print(msg)
 
-print('# Use default config.ini file (missing greetings section)...')
+print('# Use default configfy.ini file (missing greetings section)...')
 hello('Bob')
 greetings('Tom')
 goodby()
@@ -126,7 +137,10 @@ configfy+config 11.953 sec
 configfy 12.160 sec
 ```
 
-## Utility
+## Author
+I happy to receive any feedback or comments on github or privatly to manuel.pasieka@protonmail.ch
+
+## Why
 I wrote this library because I often have to write prototypes in a *scientific* settings, in which it is unclear upfront which goals to achieve.
 
 I therefore often have to introduce additional parameters and options to some function deep down in the application flow, and in order to make its behavior alterable by the user, one has to either have some global config file, or pass arguments from the user input to that part of the execution.

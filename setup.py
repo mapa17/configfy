@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="configfy",
-    version="1.0.4",
+    version="1.0.5",
     author="Manuel Pasieka",
     author_email="manuel.pasieka@protonmail.ch",
     description="Decorator library to expose keyword arguments through config files",
