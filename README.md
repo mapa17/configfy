@@ -141,8 +141,8 @@ configfy 12.160 sec
 I happy to receive any feedback or comments on github or privatly to manuel.pasieka@protonmail.ch
 
 ## Why
-I wrote this library because I often have to write prototypes in a *scientific* settings, in which it is unclear upfront which goals to achieve.
+I wrote this library because I often have to write prototypes in a *scientific* settings, in which it is unclear upfront what goals to achieve.
 
-I therefore often have to introduce additional parameters and options to some function deep down in the application flow, and in order to make its behavior alterable by the user, one has to either have some global config file, or pass arguments from the user input to that part of the execution.
+It often happened to me that I had to introduce additional parameters and options to functions deep down in the application flow, in order to make its behavior alterable by the user. One can do this by either some global config file, or parse program arguments and pass them through multiple layers to the desired functions.
 
 In order to make those steps easier and speed things up, I wrote this library which enables one to post-hoc add keyword arguments to any function in the codebase, and expose them to the user via a simple config file.
