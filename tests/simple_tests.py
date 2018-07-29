@@ -22,7 +22,7 @@ def adder2(a, b, adder2_offset=0):
     return (a + b) + adder2_offset
 
 
-### Tests ###
+### Tests Configfy ###
 
 
 def test_adder0():
@@ -64,4 +64,35 @@ def test_adder2_overwrite():
     """
     assert adder2(1, 1, adder2_offset=0) == 2, 'kwarg overwrite does not work!'
 
-assert adder2(1, 1) == 102, 'Specifying config file in decorater failed!'
+
+### Tests Configfy subcomponents ###
+
+def test_configfile_parser():
+    """Test configfy.configfile.__parse_parameter()
+    """
+    #print("[abc]: ", configfy.configfile.__parse_parameter('"abc"'))
+    # Test basic values
+    assert configfy.configfile.__parse_parameter('None') == None, "Parsing parameter failed!"
+    assert configfy.configfile.__parse_parameter('none') == None, "Parsing parameter failed!"
+    assert configfy.configfile.__parse_parameter('') == None, "Parsing parameter failed!"
+    assert configfy.configfile.__parse_parameter('true') == True, "Parsing parameter failed!"
+    assert configfy.configfile.__parse_parameter('TrUe') == True, "Parsing parameter failed!"
+    assert configfy.configfile.__parse_parameter('false') == False, "Parsing parameter failed!"
+    assert configfy.configfile.__parse_parameter('fAlsE') == False, "Parsing parameter failed!"
+    
+    assert configfy.configfile.__parse_parameter('42') == 42, "Parsing parameter failed!"
+    assert configfy.configfile.__parse_parameter('1000.123') == 1000.123, "Parsing parameter failed!"
+    assert configfy.configfile.__parse_parameter('"abcd"') == 'abcd', "Parsing parameter failed!"
+
+    # Test simple list constructs
+    assert configfy.configfile.__parse_parameter('[]') == [], "Parsing empty list failed!"
+    assert configfy.configfile.__parse_parameter("['abc']") == ['abc'], "Parsing list failed!"
+    assert configfy.configfile.__parse_parameter("['a', 'b', 'c']") == ['a', 'b', 'c'], "Parsing list failed!"
+    assert configfy.configfile.__parse_parameter('[10]') == [10], "Parsing list failed!"
+    assert configfy.configfile.__parse_parameter('[23.23]') == [23.23], "Parsing list failed!"
+    assert configfy.configfile.__parse_parameter('[10, 11, 12, 13]') == [10, 11, 12, 13], "Parsing list failed!"
+    assert configfy.configfile.__parse_parameter('[10, 11.11]') == [10, 11.11], "Parsing list failed!"
+
+    # Test list in lists
+    assert configfy.configfile.__parse_parameter('[[10, 20], [100, 200]]') == [[10, 20], [100, 200]], "Parsing list failed!"
+    assert configfy.configfile.__parse_parameter("[['abc', 'cdf'], ['ABC', 'CDF']]") == [['abc', 'cdf'], ['ABC', "CDF"]], "Parsing list failed!"

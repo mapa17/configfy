@@ -1,7 +1,8 @@
 import configparser
-from collections import OrderedDict
+from collections import OrderedDict, Iterable
 import logging
 import re
+import ast
 
 # This module has two glob variables
 config_file = ['configfy.ini',]
@@ -83,24 +84,6 @@ def read_configfile(config_file, parse_parameters=True):
     return cfg
 
 
-def parser_list(string):
-    """Helper function that parsers a string containing a list
-    
-    Arguments:
-        string {str} -- Paramter string
-    """
-    # Remove [] and whitespaces
-    cleaned = re.sub('[\[\]\s]', '', string)
-
-    # Split
-    parts = cleaned.split(',')
-
-    # Use the default parser
-    converted = [__parse_parameter(x) for x in parts]
-
-    return converted
-
-
 def __parse_parameter(parameter):
     """Try to detect parameter type
     """
@@ -114,12 +97,12 @@ def __parse_parameter(parameter):
         result = True
     elif parameter.lower() == 'false':
         result = False
-    elif parameter.lstrip('-+').isnumeric():
-        try:
-            result = float(parameter)
-        except ValueError:
-            pass
     else:
-        result = str(parameter)
+        # Try ast.literal_eval, if all fails, return as string
+        try:
+            result = ast.literal_eval(parameter)
+        except ValueError:
+            result = str(parameter)
+   
     return result
     
