@@ -5,6 +5,7 @@ import re
 import ast
 
 # This module has two glob variables
+# Use an array in order to update its value, not replace the object
 config_file = ['configfy.ini',]
 config = OrderedDict()
 
@@ -18,9 +19,12 @@ def set_active_config_file(new_config_file):
     global config_file
     global config
 
-    config_file[0] = new_config_file
-    config.clear()
-    config.update(read_configfile(config_file[0]))
+    # Only update config if read_configfile is a success
+    new_config = read_configfile(new_config_file)
+    if new_config:
+        config_file[0] = new_config_file
+        config.clear()
+        config.update(new_config)
 
 
 def get_active_config_file():
@@ -81,6 +85,8 @@ def read_configfile(config_file, parse_parameters=True):
             cfg[section] = parameters
     except Exception as e:
         logging.error('Reading the config file produced an error! %s', e)
+        cfg = None
+
     return cfg
 
 
