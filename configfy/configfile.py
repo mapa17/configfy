@@ -1,6 +1,5 @@
 import configparser
 from collections import OrderedDict, Iterable
-import logging
 import re
 import ast
 
@@ -25,6 +24,8 @@ def set_active_config_file(new_config_file):
         config_file[0] = new_config_file
         config.clear()
         config.update(new_config)
+    
+    return new_config
 
 
 def get_active_config_file():
@@ -56,7 +57,7 @@ def get_config(active_config, section):
     try:
         return active_config[section]
     except KeyError:
-        logging.warn('Config section %s not found!', section)
+        print('Configfy::Warning: Config section %s not found!' % section)
         return {}
 
 
@@ -79,12 +80,12 @@ def read_configfile(config_file, parse_parameters=True):
                         parameter = __parse_parameter(parameter)
                     parameters[option] = parameter
                 except KeyError:
-                    logging.error(format("Exception on config file option [%s]!" % option))
+                    print('Configfy::Error: Exception on config file option [%s]!' % option)
                     parameters[option] = None
 
             cfg[section] = parameters
     except Exception as e:
-        logging.error('Reading the config file produced an error! %s', e)
+        print('Configfy::Error: Reading the config file produced an error! %s', e)
         cfg = None
 
     return cfg
