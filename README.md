@@ -55,15 +55,16 @@ Show how to specify sections to use in config files and how the config file can 
 
 > From docs/example.py
 ```python
+from pudb import set_trace as st
+
 import configfy
 from configfy import configfy as cfy 
-from pudb import set_trace as st
 
 @cfy
 def hello(name, another_name='Pedro'):
     """Be nice and say hello 
     """
-    print(f'Hello {name}, I am {another_name}!')
+    print('Hello %s, I am %s!' % (name, another_name))
 
 
 @cfy(section='greetings_section')
@@ -71,31 +72,36 @@ def greetings(name, language='english'):
     """Give a nice greeting ...
     """
     if language == 'english':
-        print(f'Hello {name}! How are you doing?')
+        print('Hello %s! How are you doing?' % (name))
     elif language == 'spanish':
-        print(f'Hola {name}! Que tal?')
+        print('Hola %s! Que tal?' % (name))
     elif language == 'german':
-        print(f'Hallo {name}! Wie gehts?')
+        print('Hallo %s! Wie gehts?' % (name))
     elif language == 'serbian':
-        print(f'Zdravo {name}! Kako si?')
+        print('Zdravo %s! Kako si?' % (name))
     else:
-        print(f'!nuqneH {name}!')
+        print('!nuqneH %s!' % (name))
 
 
 @cfy(config='yet_another_config.ini')
 def goodby(msg='Goodby!'):
     print(msg)
 
+
 print('# Use default configfy.ini file (missing greetings section)...')
+print('# Current config: %s' % configfy.configfile.config)
 hello('Bob')
 greetings('Tom')
 goodby()
 
+
 print('\n# Changing config to "another_config.ini" ...')
 configfy.set_active_config_file('another_config.ini')
+print('After setting new config file, current config: %s' % configfy.configfile.config)
 hello('Bob')
 greetings('Tom')
 goodby()
+
 
 print('\n# Specifying kwargs, overwriting config settings...')
 hello('Bob', another_name='Alfredo')
@@ -106,13 +112,15 @@ goodby(msg='That\'s all Folks!')
 Produces
 
 ```bash
-# Use default config.ini file (missing greetings section)...
+# Use default configfy.ini file (missing greetings section)...
+# Current config: OrderedDict([('global', {'another_name': 'Suzan Flusan', 'language': 'spanish'})])
 Hello Bob, I am Suzan Flusan!
-WARNING:root:Config section greetings_section not found!
+Configfy::Warning: Config section greetings_section not found!
 Hello Tom! How are you doing?
 Goodby!
 
 # Changing config to "another_config.ini" ...
+After setting new config file, current config: OrderedDict([('global', {'language': 'spanish'}), ('greetings_section', {'language': 'german'})])
 Hello Bob, I am Pedro!
 Hallo Tom! Wie gehts?
 Goodby!
@@ -120,7 +128,7 @@ Goodby!
 # Specifying kwargs, overwriting config settings...
 Hello Bob, I am Alfredo!
 Zdravo Tom! Kako si?
-Thats all Folks!
+That's all Folks!
 ```
 
 ## Overhead
@@ -146,3 +154,6 @@ I wrote this library because I often have to write prototypes in a *scientific* 
 It often happened to me that I had to introduce additional parameters and options to functions deep down in the application flow, in order to make its behavior alterable by the user. One can do this by either some global config file, or parse program arguments and pass them through multiple layers to the desired functions.
 
 In order to make those steps easier and speed things up, I wrote this library which enables one to post-hoc add keyword arguments to any function in the codebase, and expose them to the user via a simple config file.
+
+## License
+MIT

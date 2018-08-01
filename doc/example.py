@@ -1,3 +1,5 @@
+from pudb import set_trace as st
+
 import configfy
 from configfy import configfy as cfy 
 
@@ -28,16 +30,21 @@ def greetings(name, language='english'):
 def goodby(msg='Goodby!'):
     print(msg)
 
+
 print('# Use default configfy.ini file (missing greetings section)...')
+print('# Current config: %s' % configfy.configfile.config)
 hello('Bob')
 greetings('Tom')
 goodby()
 
+
 print('\n# Changing config to "another_config.ini" ...')
 configfy.set_active_config_file('another_config.ini')
+print('After setting new config file, current config: %s' % configfy.configfile.config)
 hello('Bob')
 greetings('Tom')
 goodby()
+
 
 print('\n# Specifying kwargs, overwriting config settings...')
 hello('Bob', another_name='Alfredo')

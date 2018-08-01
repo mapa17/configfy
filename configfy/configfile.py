@@ -85,7 +85,7 @@ def read_configfile(config_file, parse_parameters=True):
 
             cfg[section] = parameters
     except Exception as e:
-        print('Configfy::Error: Reading the config file produced an error! %s', e)
+        print('Configfy::Error: Reading the config file [%s] produced an error! %s' % (config_file, e))
         cfg = None
 
     return cfg
