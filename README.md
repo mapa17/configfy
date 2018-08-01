@@ -113,7 +113,7 @@ Hello Tom! How are you doing?
 Goodby!
 
 # Changing config to "another_config.ini" ...
-After setting new config file, current config: OrderedDict([('global', {'language': 'spanish'}), ('greetings_section', {'language': 'german'})])
+After setting new config file, current config: OrderedDict([('global', {'language': 'spanish', 'msg': 'A goodby message! Ignored'}), ('greetings_section', {'language': 'german'})])
 Hello Bob, I am Pedro!
 Hallo Tom! Wie gehts?
 Goodby!
@@ -127,7 +127,8 @@ That's all Folks!
 ## Overhead
 Try it out yourself! Run
 
-> python doc/overhead.py
+> cd doc \
+> python overhead.py
 
 I got
 
@@ -139,7 +140,7 @@ configfy 12.160 sec
 ```
 
 ## Author
-I happy to receive any feedback or comments on github or privatly to manuel.pasieka@protonmail.ch
+I happy to receive any feedback or comments on github or privately to manuel.pasieka@protonmail.ch
 
 ## Why
 I wrote this library because I often have to write prototypes in a *scientific* settings, in which it is unclear upfront what goals to achieve.
