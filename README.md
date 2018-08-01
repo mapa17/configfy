@@ -5,11 +5,6 @@ Configfy is a prototyping library that enables fast exposure of function paramet
 
 Hostet on [github](https://github.com/mapa17/configfy)
 
-* [Installation](##Installation) How to install configfy
-* [Examples](##Examples) Look at a simple example
-* [Performance overhead](##Overhead) Whats the additional computational cost?
-* [Reasons for developing this library](##Why) What is it good for?
-
 ## Installation
 Configfy is best installed using pip
 
@@ -17,7 +12,7 @@ Configfy is best installed using pip
     pip install configfy
 ```
 
-## Examples
+## Simple example
 
 Define a function that makes use of keyword arguments, and overwrites the default
 keyword argument with a config file setting.
@@ -39,7 +34,7 @@ With a config.ini containing
 
 ```ini
 [global]
-another_name = Suzan Flusan
+another_name = 'Suzan Flusan'
 ```
 
 produces
@@ -50,7 +45,7 @@ Hello Bob, I am Suzan Flusan!
 
 Note: Be aware that the library expects the presence of a config file (./configfy.ini) containing at least the empty section [global].
 
-## More Examples
+## Advanced Example
 Show how to specify sections to use in config files and how the config file can be changed during runtime, or specified in the decorator.
 
 > From docs/example.py
