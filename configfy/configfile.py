@@ -2,6 +2,10 @@ import configparser
 from collections import OrderedDict, Iterable
 import re
 import ast
+import logging
+
+logger = logging.getLogger(__name__.split('.')[0])
+
 
 # This module has two glob variables
 # Use an array in order to update its value, not replace the object
@@ -57,7 +61,7 @@ def get_config(active_config, section):
     try:
         return active_config[section]
     except KeyError:
-        print('Configfy::Warning: Config section %s not found!' % section)
+        logger.warn('Config section %s not found!' % section)
         return {}
 
 
@@ -80,12 +84,12 @@ def read_configfile(config_file, parse_parameters=True):
                         parameter = __parse_parameter(parameter)
                     parameters[option] = parameter
                 except KeyError:
-                    print('Configfy::Error: Exception on config file option [%s]!' % option)
+                    logger.exception('Exception on config file [%s] option [%s]!' % (config_file, option))
                     parameters[option] = None
 
             cfg[section] = parameters
     except Exception as e:
-        print('Configfy::Error: Reading the config file [%s] produced an error! %s' % (config_file, e))
+        logger.exception('Error reading config file [%s]!' % (config_file))
         cfg = None
 
     return cfg

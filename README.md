@@ -108,7 +108,7 @@ Produces
 # Use default configfy.ini file (missing greetings section)...
 # Current config: OrderedDict([('global', {'another_name': 'Suzan Flusan', 'language': 'spanish'})])
 Hello Bob, I am Suzan Flusan!
-Configfy::Warning: Config section greetings_section not found!
+# 2018-08-01 17:45:53,834 - configfy - WARNING - Config section greetings_section not found!
 Hello Tom! How are you doing?
 Goodby!
 
