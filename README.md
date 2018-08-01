@@ -55,8 +55,6 @@ Show how to specify sections to use in config files and how the config file can 
 
 > From docs/example.py
 ```python
-from pudb import set_trace as st
-
 import configfy
 from configfy import configfy as cfy 
 
